@@ -4,7 +4,7 @@
 #
 Name     : re2
 Version  : 2019.03.01
-Release  : 1
+Release  : 2
 URL      : https://github.com/google/re2/archive/2019-03-01.tar.gz
 Source0  : https://github.com/google/re2/archive/2019-03-01.tar.gz
 Summary  : RE2 is a fast, safe, thread-friendly regular expression engine.
@@ -48,22 +48,40 @@ license components for the re2 package.
 
 %prep
 %setup -q -n re2-2019-03-01
+pushd ..
+cp -a re2-2019-03-01 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1552718003
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export SOURCE_DATE_EPOCH=1552718131
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 make  %{?_smp_mflags} includeir=/usr/include libdir=/usr/lib64
 
+pushd ../buildavx2
+export CFLAGS="$CFLAGS -m64 -march=haswell"
+export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
+export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+make  %{?_smp_mflags} includeir=/usr/include libdir=/usr/lib64
+popd
 
 %install
-export SOURCE_DATE_EPOCH=1552718003
+export SOURCE_DATE_EPOCH=1552718131
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/re2
 cp LICENSE %{buildroot}/usr/share/package-licenses/re2/LICENSE
+pushd ../buildavx2/
+%make_install_avx2 includeir=/usr/include libdir=/usr/lib64
+popd
 %make_install includeir=/usr/include libdir=/usr/lib64
 
 %files
@@ -71,11 +89,14 @@ cp LICENSE %{buildroot}/usr/share/package-licenses/re2/LICENSE
 
 %files dev
 %defattr(-,root,root,-)
+/usr/lib64/haswell/libre2.so
 /usr/lib64/libre2.so
 /usr/lib64/pkgconfig/re2.pc
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/haswell/libre2.so.0
+/usr/lib64/haswell/libre2.so.0.0.0
 /usr/lib64/libre2.so.0
 /usr/lib64/libre2.so.0.0.0
 
