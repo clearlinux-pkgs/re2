@@ -1,1 +1,1 @@
-includeir=/usr/include libdir=/usr/lib64
+includedir=/usr/include libdir=/usr/lib64
