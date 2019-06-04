@@ -1,5 +1,5 @@
 PKG_NAME := re2
-URL = https://github.com/google/re2/archive/2019-04-01/re2-2019.04.01.tar.gz
+URL = https://github.com/google/re2/archive/2019-06-01/re2-2019.06.01.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
