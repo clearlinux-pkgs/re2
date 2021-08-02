@@ -4,7 +4,7 @@
 #
 Name     : re2
 Version  : 2021.08.01
-Release  : 26
+Release  : 27
 URL      : https://github.com/google/re2/archive/2021-08-01/re2-2021.08.01.tar.gz
 Source0  : https://github.com/google/re2/archive/2021-08-01/re2-2021.08.01.tar.gz
 Summary  : RE2 is a fast, safe, thread-friendly regular expression engine.
@@ -53,21 +53,24 @@ cd %{_builddir}/re2-2021-08-01
 pushd ..
 cp -a re2-2021-08-01 buildavx2
 popd
+pushd ..
+cp -a re2-2021-08-01 buildavx512
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1627939014
+export SOURCE_DATE_EPOCH=1627939357
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
 make  %{?_smp_mflags}  includedir=/usr/include libdir=/usr/lib64
 
 pushd ../buildavx2
@@ -78,13 +81,24 @@ export FCFLAGS="$FCFLAGS -m64 -march=haswell"
 export LDFLAGS="$LDFLAGS -m64 -march=haswell"
 make  %{?_smp_mflags}  includedir=/usr/include libdir=/usr/lib64
 popd
+pushd ../buildavx512
+export CFLAGS="$CFLAGS -m64 -march=skylake-avx512 -mprefer-vector-width=256"
+export CXXFLAGS="$CXXFLAGS -m64 -march=skylake-avx512 -mprefer-vector-width=256"
+export FFLAGS="$FFLAGS -m64 -march=skylake-avx512 -mprefer-vector-width=256"
+export FCFLAGS="$FCFLAGS -m64 -march=skylake-avx512 -mprefer-vector-width=256"
+export LDFLAGS="$LDFLAGS -m64 -march=skylake-avx512"
+make  %{?_smp_mflags}  includedir=/usr/include libdir=/usr/lib64
+popd
 
 %install
-export SOURCE_DATE_EPOCH=1627939014
+export SOURCE_DATE_EPOCH=1627939357
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/re2
 cp %{_builddir}/re2-2021-08-01/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141
 cp %{_builddir}/re2-2021-08-01/re2/fuzzing/compiler-rt/LICENSE %{buildroot}/usr/share/package-licenses/re2/483d1c97dc79ef8741eae507897ca39cfe19da36
+pushd ../buildavx512/
+%make_install_avx512 includedir=/usr/include libdir=/usr/lib64
+popd
 pushd ../buildavx2/
 %make_install_avx2 includedir=/usr/include libdir=/usr/lib64
 popd
@@ -99,12 +113,15 @@ popd
 /usr/include/re2/re2.h
 /usr/include/re2/set.h
 /usr/include/re2/stringpiece.h
+/usr/lib64/haswell/avx512_1/libre2.so
 /usr/lib64/haswell/libre2.so
 /usr/lib64/libre2.so
 /usr/lib64/pkgconfig/re2.pc
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/haswell/avx512_1/libre2.so.9
+/usr/lib64/haswell/avx512_1/libre2.so.9.0.0
 /usr/lib64/haswell/libre2.so.9
 /usr/lib64/haswell/libre2.so.9.0.0
 /usr/lib64/libre2.so.9
