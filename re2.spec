@@ -4,13 +4,12 @@
 #
 Name     : re2
 Version  : 2022.06.01
-Release  : 35
+Release  : 36
 URL      : https://github.com/google/re2/archive/2022-06-01/re2-2022.06.01.tar.gz
 Source0  : https://github.com/google/re2/archive/2022-06-01/re2-2022.06.01.tar.gz
 Summary  : RE2 is a fast, safe, thread-friendly regular expression engine.
 Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause
-Requires: re2-filemap = %{version}-%{release}
 Requires: re2-lib = %{version}-%{release}
 Requires: re2-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
@@ -31,19 +30,10 @@ Requires: re2 = %{version}-%{release}
 dev components for the re2 package.
 
 
-%package filemap
-Summary: filemap components for the re2 package.
-Group: Default
-
-%description filemap
-filemap components for the re2 package.
-
-
 %package lib
 Summary: lib components for the re2 package.
 Group: Libraries
 Requires: re2-license = %{version}-%{release}
-Requires: re2-filemap = %{version}-%{release}
 
 %description lib
 lib components for the re2 package.
@@ -72,7 +62,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1654096189
+export SOURCE_DATE_EPOCH=1656364943
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -101,7 +91,7 @@ make  %{?_smp_mflags}  includedir=/usr/include libdir=/usr/lib64
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1654096189
+export SOURCE_DATE_EPOCH=1656364943
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/re2
 cp %{_builddir}/re2-2022-06-01/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141
@@ -113,8 +103,8 @@ pushd ../buildavx512/
 %make_install_v4 includedir=/usr/include libdir=/usr/lib64
 popd
 %make_install includedir=/usr/include libdir=/usr/lib64
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
-/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -125,18 +115,19 @@ popd
 /usr/include/re2/re2.h
 /usr/include/re2/set.h
 /usr/include/re2/stringpiece.h
+/usr/lib64/glibc-hwcaps/x86-64-v3/libre2.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/libre2.so
 /usr/lib64/libre2.so
 /usr/lib64/pkgconfig/re2.pc
 
-%files filemap
-%defattr(-,root,root,-)
-/usr/share/clear/filemap/filemap-re2
-
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/glibc-hwcaps/x86-64-v3/libre2.so.9
+/usr/lib64/glibc-hwcaps/x86-64-v3/libre2.so.9.0.0
+/usr/lib64/glibc-hwcaps/x86-64-v4/libre2.so.9
+/usr/lib64/glibc-hwcaps/x86-64-v4/libre2.so.9.0.0
 /usr/lib64/libre2.so.9
 /usr/lib64/libre2.so.9.0.0
-/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
