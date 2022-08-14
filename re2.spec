@@ -4,7 +4,7 @@
 #
 Name     : re2
 Version  : 2022.06.01
-Release  : 37
+Release  : 38
 URL      : https://github.com/google/re2/archive/2022-06-01/re2-2022.06.01.tar.gz
 Source0  : https://github.com/google/re2/archive/2022-06-01/re2-2022.06.01.tar.gz
 Summary  : RE2 is a fast, safe, thread-friendly regular expression engine.
