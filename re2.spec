@@ -4,7 +4,7 @@
 #
 Name     : re2
 Version  : 2022.06.01
-Release  : 41
+Release  : 42
 URL      : https://github.com/google/re2/archive/2022-06-01/re2-2022.06.01.tar.gz
 Source0  : https://github.com/google/re2/archive/2022-06-01/re2-2022.06.01.tar.gz
 Summary  : RE2 is a fast, safe, thread-friendly regular expression engine.
@@ -71,15 +71,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1662679523
+export SOURCE_DATE_EPOCH=1667438590
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition "
 make  %{?_smp_mflags}  includedir=/usr/include libdir=/usr/lib64
 
 pushd ../buildavx2
@@ -91,20 +91,20 @@ export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
 make  %{?_smp_mflags}  includedir=/usr/include libdir=/usr/lib64
 popd
 pushd ../buildavx512
-export CFLAGS="$CFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=256 -Wl,-z,x86-64-v4"
-export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=256 -Wl,-z,x86-64-v4"
-export FFLAGS="$FFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=256 -Wl,-z,x86-64-v4"
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=512 -Wl,-z,x86-64-v4 -mtune=sapphirerapids "
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=512 -Wl,-z,x86-64-v4 -mtune=sapphirerapids "
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=512 -Wl,-z,x86-64-v4"
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=256"
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v4"
 make  %{?_smp_mflags}  includedir=/usr/include libdir=/usr/lib64
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1662679523
+export SOURCE_DATE_EPOCH=1667438590
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/re2
-cp %{_builddir}/re2-2022-06-01/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141
-cp %{_builddir}/re2-2022-06-01/re2/fuzzing/compiler-rt/LICENSE %{buildroot}/usr/share/package-licenses/re2/483d1c97dc79ef8741eae507897ca39cfe19da36
+cp %{_builddir}/re2-2022-06-01/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
+cp %{_builddir}/re2-2022-06-01/re2/fuzzing/compiler-rt/LICENSE %{buildroot}/usr/share/package-licenses/re2/483d1c97dc79ef8741eae507897ca39cfe19da36 || :
 pushd ../buildavx2/
 %make_install_v3 includedir=/usr/include libdir=/usr/lib64
 popd
