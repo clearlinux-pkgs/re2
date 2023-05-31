@@ -5,7 +5,7 @@
 #
 Name     : re2
 Version  : 2023.03.01
-Release  : 47
+Release  : 48
 URL      : https://github.com/google/re2/archive/2023-03-01/re2-2023.03.01.tar.gz
 Source0  : https://github.com/google/re2/archive/2023-03-01/re2-2023.03.01.tar.gz
 Summary  : RE2 is a fast, safe, thread-friendly regular expression engine.
@@ -65,7 +65,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1683227389
+export SOURCE_DATE_EPOCH=1685509928
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -94,7 +94,7 @@ make  %{?_smp_mflags}  includedir=/usr/include libdir=/usr/lib64
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1683227389
+export SOURCE_DATE_EPOCH=1685509928
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/re2
 cp %{_builddir}/re2-2023-03-01/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
@@ -114,8 +114,6 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/V3/usr/lib64/libre2.so
-/V4/usr/lib64/libre2.so
 /usr/include/re2/filtered_re2.h
 /usr/include/re2/re2.h
 /usr/include/re2/set.h
@@ -125,9 +123,7 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libre2.so.10
 /V3/usr/lib64/libre2.so.10.0.0
-/V4/usr/lib64/libre2.so.10
 /V4/usr/lib64/libre2.so.10.0.0
 /usr/lib64/libre2.so.10
 /usr/lib64/libre2.so.10.0.0
