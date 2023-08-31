@@ -4,10 +4,10 @@
 # Using build pattern: make
 #
 Name     : re2
-Version  : 2023.08.01
-Release  : 51
-URL      : https://github.com/google/re2/archive/2023-08-01/re2-2023.08.01.tar.gz
-Source0  : https://github.com/google/re2/archive/2023-08-01/re2-2023.08.01.tar.gz
+Version  : 2023.09.01
+Release  : 52
+URL      : https://github.com/google/re2/archive/2023-09-01/re2-2023.09.01.tar.gz
+Source0  : https://github.com/google/re2/archive/2023-09-01/re2-2023.09.01.tar.gz
 Summary  : RE2 is a fast, safe, thread-friendly regular expression engine.
 Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause
@@ -52,13 +52,13 @@ license components for the re2 package.
 
 
 %prep
-%setup -q -n re2-2023-08-01
-cd %{_builddir}/re2-2023-08-01
+%setup -q -n re2-2023-09-01
+cd %{_builddir}/re2-2023-09-01
 pushd ..
-cp -a re2-2023-08-01 buildavx2
+cp -a re2-2023-09-01 buildavx2
 popd
 pushd ..
-cp -a re2-2023-08-01 buildavx512
+cp -a re2-2023-09-01 buildavx512
 popd
 
 %build
@@ -66,7 +66,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1690903864
+export SOURCE_DATE_EPOCH=1693507999
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -95,12 +95,12 @@ make  %{?_smp_mflags}  includedir=/usr/include libdir=/usr/lib64
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1690903864
+export SOURCE_DATE_EPOCH=1693507999
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/re2
-cp %{_builddir}/re2-2023-08-01/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
-cp %{_builddir}/re2-2023-08-01/python/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
-cp %{_builddir}/re2-2023-08-01/re2/fuzzing/compiler-rt/LICENSE %{buildroot}/usr/share/package-licenses/re2/483d1c97dc79ef8741eae507897ca39cfe19da36 || :
+cp %{_builddir}/re2-2023-09-01/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
+cp %{_builddir}/re2-2023-09-01/python/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
+cp %{_builddir}/re2-2023-09-01/re2/fuzzing/compiler-rt/LICENSE %{buildroot}/usr/share/package-licenses/re2/483d1c97dc79ef8741eae507897ca39cfe19da36 || :
 pushd ../buildavx2/
 %make_install_v3 includedir=/usr/include libdir=/usr/lib64
 popd
