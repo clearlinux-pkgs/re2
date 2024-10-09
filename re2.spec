@@ -7,7 +7,7 @@
 #
 Name     : re2
 Version  : 2024.07.02
-Release  : 60
+Release  : 61
 URL      : https://github.com/google/re2/archive/2024-07-02/re2-2024.07.02.tar.gz
 Source0  : https://github.com/google/re2/archive/2024-07-02/re2-2024.07.02.tar.gz
 Summary  : RE2 is a fast, safe, thread-friendly regular expression engine.
