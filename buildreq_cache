@@ -1,4 +1,3 @@
-2024.07.02
-pkgconfig(absl_synchronization)
+2025.06.26
+pkgconfig(absl_absl_check)
 pkgconfig(gtest)
-pkgconfig(gtest_main)
