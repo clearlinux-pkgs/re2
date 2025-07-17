@@ -6,10 +6,10 @@
 # autospec commit: 65cf152
 #
 Name     : re2
-Version  : 2025.06.26
-Release  : 62
-URL      : https://github.com/google/re2/archive/2025-06-26/re2-2025.06.26.tar.gz
-Source0  : https://github.com/google/re2/archive/2025-06-26/re2-2025.06.26.tar.gz
+Version  : 2025.07.17
+Release  : 63
+URL      : https://github.com/google/re2/archive/2025-07-17/re2-2025.07.17.tar.gz
+Source0  : https://github.com/google/re2/archive/2025-07-17/re2-2025.07.17.tar.gz
 Summary  : RE2 is a fast, safe, thread-friendly regular expression engine.
 Group    : Development/Tools
 License  : BSD-3-Clause
@@ -55,13 +55,13 @@ license components for the re2 package.
 
 
 %prep
-%setup -q -n re2-2025-06-26
-cd %{_builddir}/re2-2025-06-26
+%setup -q -n re2-2025-07-17
+cd %{_builddir}/re2-2025-07-17
 pushd ..
-cp -a re2-2025-06-26 buildavx2
+cp -a re2-2025-07-17 buildavx2
 popd
 pushd ..
-cp -a re2-2025-06-26 buildavx512
+cp -a re2-2025-07-17 buildavx512
 popd
 
 %build
@@ -69,7 +69,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1751039070
+export SOURCE_DATE_EPOCH=1752796246
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -121,11 +121,11 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1751039070
+export SOURCE_DATE_EPOCH=1752796246
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/re2
-cp %{_builddir}/re2-2025-06-26/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
-cp %{_builddir}/re2-2025-06-26/python/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
+cp %{_builddir}/re2-2025-07-17/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
+cp %{_builddir}/re2-2025-07-17/python/LICENSE %{buildroot}/usr/share/package-licenses/re2/e310076ee4f65219003bfae2427646e0236c5141 || :
 export GOAMD64=v2
 GOAMD64=v3
 pushd ../buildavx2/
